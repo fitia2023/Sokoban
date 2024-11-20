@@ -1,4 +1,3 @@
-// Game.ts
 import { DIRECTION } from "./DIRECTION.js";
 import { Display } from "../View/Display.js";
 import { Hole } from "../modele/Hole.js";
