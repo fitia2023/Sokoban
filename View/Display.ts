@@ -9,7 +9,7 @@ export class Display {
         this.drawer = new Drawer(width, height, scale)
     }
 
-    public refrechLevel(_level: number): void {
+    public refreshLevel(_level: number): void {
         let level: HTMLElement | null = document.getElementById("level");
         if (level != null) level.innerHTML = _level.toString();
     }

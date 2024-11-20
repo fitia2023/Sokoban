@@ -3,7 +3,7 @@ export class Display {
     constructor(width, height, scale = 10) {
         this.drawer = new Drawer(width, height, scale);
     }
-    refrechLevel(_level) {
+    refreshLevel(_level) {
         let level = document.getElementById("level");
         if (level != null)
             level.innerHTML = _level.toString();
