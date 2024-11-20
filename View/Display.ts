@@ -1,49 +1,43 @@
 import Drawer from "./Drawer.js";
-import { Game } from "../control/Game.js";  
+import { Game } from "../control/Game.js";
 
 
 export class Display {
-    private score: number = 0
     private drawer: Drawer;
-    private speed: number;
 
-
-    constructor(width: number, height: number, scale: number = 10, speed: number = 100) {
+    constructor(width: number, height: number, scale: number = 10) {
         this.drawer = new Drawer(width, height, scale)
-        this.speed = speed
     }
 
-    public refreshScore() {
+    public refrechLevel(_level: number): void {
+        let level: HTMLElement | null = document.getElementById("level");
+        if (level != null) level.innerHTML = _level.toString();
+    }
+
+    public refreshScore(_score: number): void {
         let score: HTMLElement | null = document.getElementById("score");
-        if (score != null) score.innerHTML = this.score.toString();
-    }
-
-    public get_drawer(): Drawer {
-        return this.drawer
+        if (score != null) score.innerHTML = _score.toString();
     }
 
     public draw(game: Game): void {
-        this.drawer.clear();
-        game.display_object();
+
+        // effacer ancien affichage
+        this.drawer.clear()
+
+        // Affichage du joueur
+        const player = game['player']
+        this.drawer.drawCircle(player.getx(), player.gety(), player.getcolor())
+
+        // Affichage roche(s)
+        game['rocks'].forEach(rock => {
+            this.drawer.drawRectangle(rock.getx(), rock.gety(), rock.getcolor())
+        })
+
+        // Affichage trou(s)
+        game['holes'].forEach(hole => {
+            this.drawer.drawRectangle(hole.getx(), hole.gety(), hole.getcolor())
+        })
+
     }
-        
 
-    public play(game: Game): void {
-        let lastchrono: any;
-        let done: boolean = false
-        let loop = (chrono: number) => {
-            if (!lastchrono) lastchrono = chrono;
-
-            const delta = chrono - lastchrono;
-            if (delta >= this.speed) {
-                done = game.partie()
-                this.score = game.get_score()
-                this.refreshScore()
-                lastchrono = chrono;
-            }
-
-            if (!done) requestAnimationFrame(loop)
-        }
-        requestAnimationFrame(loop)
-    }
 }

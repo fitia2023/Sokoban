@@ -1,38 +1,31 @@
 import Drawer from "./Drawer.js";
 export class Display {
-    constructor(width, height, scale = 10, speed = 100) {
-        this.score = 0;
+    constructor(width, height, scale = 10) {
         this.drawer = new Drawer(width, height, scale);
-        this.speed = speed;
     }
-    refreshScore() {
+    refrechLevel(_level) {
+        let level = document.getElementById("level");
+        if (level != null)
+            level.innerHTML = _level.toString();
+    }
+    refreshScore(_score) {
         let score = document.getElementById("score");
         if (score != null)
-            score.innerHTML = this.score.toString();
-    }
-    get_drawer() {
-        return this.drawer;
+            score.innerHTML = _score.toString();
     }
     draw(game) {
+        // effacer ancien affichage
         this.drawer.clear();
-        game.display_object();
-    }
-    play(game) {
-        let lastchrono;
-        let done = false;
-        let loop = (chrono) => {
-            if (!lastchrono)
-                lastchrono = chrono;
-            const delta = chrono - lastchrono;
-            if (delta >= this.speed) {
-                done = game.partie();
-                this.score = game.get_score();
-                this.refreshScore();
-                lastchrono = chrono;
-            }
-            if (!done)
-                requestAnimationFrame(loop);
-        };
-        requestAnimationFrame(loop);
+        // Affichage du joueur
+        const player = game['player'];
+        this.drawer.drawCircle(player.getx(), player.gety(), player.getcolor());
+        // Affichage roche(s)
+        game['rocks'].forEach(rock => {
+            this.drawer.drawRectangle(rock.getx(), rock.gety(), rock.getcolor());
+        });
+        // Affichage trou(s)
+        game['holes'].forEach(hole => {
+            this.drawer.drawRectangle(hole.getx(), hole.gety(), hole.getcolor());
+        });
     }
 }
