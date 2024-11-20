@@ -16,16 +16,16 @@ export class Display {
     draw(game) {
         // effacer ancien affichage
         this.drawer.clear();
-        // Affichage du joueur
-        const player = game['player'];
-        this.drawer.drawCircle(player.getx(), player.gety(), player.getcolor());
-        // Affichage roche(s)
-        game['rocks'].forEach(rock => {
-            this.drawer.drawRectangle(rock.getx(), rock.gety(), rock.getcolor());
-        });
         // Affichage trou(s)
         game['holes'].forEach(hole => {
             this.drawer.drawRectangle(hole.getx(), hole.gety(), hole.getcolor());
         });
+        // Affichage roche(s)
+        game['rocks'].forEach(rock => {
+            this.drawer.drawRectangle(rock.getx(), rock.gety(), rock.getcolor());
+        });
+        // Affichage du joueur
+        const player = game['player'];
+        this.drawer.drawCircle(player.getx(), player.gety(), player.getcolor());
     }
 }

@@ -20,4 +20,11 @@ export class MovePoint extends Point {
         }
         return false
     }
+    
+    public nextPosition(dir:DIRECTION):Point{
+        return new Point(
+            this.x + Number(dir === DIRECTION.RIGHT) - Number(dir === DIRECTION.LEFT),
+            this.y + Number(dir === DIRECTION.DOWN) - Number(dir === DIRECTION.UP)
+        )
+    }
 }

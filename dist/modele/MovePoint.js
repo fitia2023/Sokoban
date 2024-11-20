@@ -16,4 +16,7 @@ export class MovePoint extends Point {
         }
         return false;
     }
+    nextPosition(dir) {
+        return new Point(this.x + Number(dir === DIRECTION.RIGHT) - Number(dir === DIRECTION.LEFT), this.y + Number(dir === DIRECTION.DOWN) - Number(dir === DIRECTION.UP));
+    }
 }
